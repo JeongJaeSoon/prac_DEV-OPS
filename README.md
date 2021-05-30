@@ -2,7 +2,7 @@
 
 > 1. 팀 개발과 커뮤니케이션을 효율화 - GitHub
 > 2. 보다 쉽게 Local 개발 환경을 만들고 공유 - Docker
-> 3. 작업을 졍형화하고 이력을 관리 - Jenkins 
+> 3. 작업을 졍형화하고 이력을 관리 - Jenkins
 > 4. 빠른 Feedback 과 빠른 Release - CI/CD
 
 1. [Docker](https://docs.docker.com)
@@ -36,3 +36,4 @@
    - [01. CI/CD](https://github.com/JeongJaeSoon/DevOps-study/blob/main/CI_CD/01.%20CI_CD.md)
    - [02. CI](https://github.com/JeongJaeSoon/DevOps-study/blob/main/CI_CD/02.%20CI.md)
    - [03. CD](https://github.com/JeongJaeSoon/DevOps-study/blob/main/CI_CD/03.%20CD.md)
+   - [04. CI/CD 구축](https://github.com/JeongJaeSoon/DevOps-study/blob/main/CI_CD/04.%20CI_CD_%EA%B5%AC%EC%B6%95.md)
