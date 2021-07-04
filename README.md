@@ -37,3 +37,7 @@
    - [02. CI](https://github.com/JeongJaeSoon/DevOps-study/blob/main/CI_CD/02.%20CI.md)
    - [03. CD](https://github.com/JeongJaeSoon/DevOps-study/blob/main/CI_CD/03.%20CD.md)
    - [04. CI/CD 구축](https://github.com/JeongJaeSoon/DevOps-study/blob/main/CI_CD/04.%20CI_CD_%EA%B5%AC%EC%B6%95.md)
+
+> 참고
+>
+> - [Github Actions 로 AWS S3 에 자동 배포하기](https://github.com/JeongJaeSoon/github_actions#readme)
