@@ -19,6 +19,7 @@ jobs:
       #     echo "--------------------------------------------------------"
       #     echo ${{ needs.pull-request.result }}
       - name: Notify slack pr open
+        uses: erskaggs/slack-pr-notify@v1.0.1
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
@@ -30,7 +31,7 @@ jobs:
           PULL_REQUEST_COMPARE_BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
           PULL_REQUEST_BASE_BRANCH_NAME: ${{ github.event.pull_request.base.ref }}
           IS_SEND_HERE_MENTION: true
-        uses: erskaggs/slack-pr-notify@v1.0.0
+        
       - name: slack-send
         uses: slackapi/slack-github-action@v1.19.0
         with:
