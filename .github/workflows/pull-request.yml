@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - "feature/*" # Support wildcard matching
+  pull_request:
+    types: [opened, reopened]
 
 jobs:
   pull-request:
