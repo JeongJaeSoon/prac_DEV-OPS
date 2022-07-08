@@ -1,10 +1,13 @@
-name: slack-notifications
+name: slack notifications
 on:
   push:
     branches:
       - main
       - develop
       # - feature/slack-test
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   deploy-dev:
