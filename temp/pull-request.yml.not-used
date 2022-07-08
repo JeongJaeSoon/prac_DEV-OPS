@@ -1,0 +1,49 @@
+# # https://github.com/marketplace/actions/github-pull-request-action
+
+# name: pull request
+# on:
+#   push:
+#     branches:
+#       - "feature/*" # Support wildcard matching
+
+# jobs:
+#   pull-request:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: pull-request
+#         id: open-pr
+#         uses: repo-sync/pull-request@v2
+#         with:
+#           destination_branch: "develop"
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#       - name: output-url
+#         run: echo ${{ steps.open-pr.outputs.pr_url }}
+#       - name: output-number
+#         run: echo ${{ steps.open-pr.outputs.pr_number }}
+#       - name: output-has-changed-files
+#         run: echo ${{ steps.open-pr.outputs.has_changed_files }}
+
+#   slack-notification:
+#     if: ${{ always() }}
+#     needs: [pull-request]
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Set TEST_VALUE_1 Env Variable
+#         run: |
+#           TEST_VALUE_1="🧑🏻‍💻 TEST"
+#           echo "TEST_VALUE_1=${TEST_VALUE_1}" >> $GITHUB_ENV
+#           echo "--------------------------------------------------------"
+#           echo ${{ needs.pull-request.result }}
+#       - name: slack-send
+#         uses: slackapi/slack-github-action@v1.19.0
+#         with:
+#           payload: |
+#             {
+#               "pr_url": "${{ steps.open-pr.outputs.pr_url }}",
+#               "head_commit_url": "${{ github.event.head_commit.url }}",
+#               "test_value_1": "${{ env.TEST_VALUE_1 }}"
+#             }
+#         env:
+#           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_CUSTOM }}
+#           ACTION_RUN_URL: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
