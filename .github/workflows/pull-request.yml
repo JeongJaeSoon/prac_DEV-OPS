@@ -42,6 +42,7 @@ jobs:
         with:
           payload: |
             {
+              "pr_url": "${{ steps.open-pr.outputs.pr_url }}",
               "head_commit_url": "${{ github.event.head_commit.url }}",
               "test_value_1": "${{ env.TEST_VALUE_1 }}"
             }
