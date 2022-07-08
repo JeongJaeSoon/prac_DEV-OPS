@@ -15,7 +15,7 @@ jobs:
         id: open-pr
         uses: repo-sync/pull-request@v2
         with:
-          destination_branch: "develop"
+          destination_branch: "develop_"
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: output-url
         run: echo ${{ steps.open-pr.outputs.pr_url }}
@@ -23,3 +23,4 @@ jobs:
         run: echo ${{ steps.open-pr.outputs.pr_number }}
       - name: output-has-changed-files
         run: echo ${{ steps.open-pr.outputs.has_changed_files }}
+        
