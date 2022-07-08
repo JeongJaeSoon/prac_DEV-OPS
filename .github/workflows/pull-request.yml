@@ -15,21 +15,8 @@ jobs:
         id: open-pr
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: "" # If blank, default: triggered branch
-          destination_branch: "main" # If blank, default: master
-          pr_title: "Pulling ${{ github.ref }} into master" # Title of pull request
-          pr_body: ":crown: *An automated PR*" # Full markdown support, requires pr_title to be set
-          # pr_template: ".github/PULL_REQUEST_TEMPLATE.md" # Path to pull request template, requires pr_title to be set, excludes pr_body
-          pr_reviewer: "wei,worker" # Comma-separated list (no spaces)
-          pr_assignee: "wei,worker" # Comma-separated list (no spaces)
-          pr_label: "auto-pr" # Comma-separated list (no spaces)
-          pr_milestone: "Milestone 1" # Milestone name
-          pr_draft: true # Creates pull request as draft
-          pr_allow_empty: true # Creates pull request even if there are no changes
+          destination_branch: "develop"
           github_token: ${{ secrets.GITHUB_TOKEN }}
-        # with:
-        #   destination_branch: "develop"
-        #   github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: output-url
         run: echo ${{ steps.open-pr.outputs.pr_url }}
       - name: output-number
@@ -39,24 +26,24 @@ jobs:
       - name: check-values
         run: echo ${{ steps.open-pr }}
 
-  # slack-notification:
-  #   if: ${{ always() }}
-  #   needs: [pull-request]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Set TEST_VALUE_1 Env Variable
-  #       run: |
-  #         TEST_VALUE_1="🧑🏻‍💻 TEST"
-  #         echo "TEST_VALUE_1=${TEST_VALUE_1}" >> $GITHUB_ENV
-  #         echo "--------------------------------------------------------"
-  #         echo ${{ needs.pull-request }}
-  #     - name: slack-send
-  #       uses: slackapi/slack-github-action@v1.19.0
-  #       with:
-  #         payload: |
-  #           {
-  #             "test_value_1": "${{ env.TEST_VALUE_1 }}"
-  #           }
-  #       env:
-  #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_CUSTOM }}
-  #         ACTION_RUN_URL: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+  slack-notification:
+    if: ${{ always() }}
+    needs: [pull-request]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set TEST_VALUE_1 Env Variable
+        run: |
+          TEST_VALUE_1="🧑🏻‍💻 TEST"
+          echo "TEST_VALUE_1=${TEST_VALUE_1}" >> $GITHUB_ENV
+          echo "--------------------------------------------------------"
+          echo ${{ needs.pull-request.result }}
+      - name: slack-send
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          payload: |
+            {
+              "test_value_1": "${{ env.TEST_VALUE_1 }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_CUSTOM }}
+          ACTION_RUN_URL: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
