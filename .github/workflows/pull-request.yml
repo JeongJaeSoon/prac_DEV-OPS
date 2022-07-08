@@ -66,12 +66,11 @@ jobs:
     steps:
       - name: view the PR number
         run: |
-          echo "PR number = ${{ github.event.pull_request.number }}"
-          echo "PR number = ${{ env.PR_NUMBER }}"
-          echo "${{ github.event.pull_request.title }}"
-          echo "${{ github.event.pull_request.user.login }}"
-          echo "${{ github.event.pull_request.user.avatar_url }}"
-          echo "${{ github.event.pull_request.html_url }}"
-          echo "${{ github.event.pull_request.body }}"
-          echo "${{ github.event.pull_request.head.ref }}"
-          echo "${{ github.event.pull_request.base.ref }}"
+          echo "PR number : ${{ github.event.pull_request.number }}"
+          echo "title : ${{ github.event.pull_request.title }}"
+          echo "author : ${{ github.event.pull_request.user.login }}"
+          echo "avatar_url : ${{ github.event.pull_request.user.avatar_url }}"
+          echo "html_url : ${{ github.event.pull_request.html_url }}"
+          echo "body : ${{ github.event.pull_request.body }}"
+          echo "head.ref : ${{ github.event.pull_request.head.ref }}"
+          echo "base.ref : ${{ github.event.pull_request.base.ref }}"
