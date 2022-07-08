@@ -28,10 +28,14 @@ jobs:
               "PULL_REQUEST_AUTHOR_NAME" : "${{ github.event.pull_request.user.login }}",
               "PULL_REQUEST_AUTHOR_ICON_URL" : "${{ github.event.pull_request.user.avatar_url }}",
               "PULL_REQUEST_URL" : "${{ github.event.pull_request.html_url }}",
-              "PULL_REQUEST_BODY" : "${{ github.event.pull_request.body }}",
+              
               "PULL_REQUEST_COMPARE_BRANCH_NAME" : "${{ github.event.pull_request.head.ref }}",
               "PULL_REQUEST_BASE_BRANCH_NAME" : "${{ github.event.pull_request.base.ref }}"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_CUSTOM }}
           ACTION_RUN_URL: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+
+
+# "PULL_REQUEST_BODY" : "${{ github.event.pull_request.body }}",
