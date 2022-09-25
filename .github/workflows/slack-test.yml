@@ -1,0 +1,80 @@
+# name: Build and Deploy
+# on:
+#   push:
+#     branches:
+#       - main
+#       - develop
+#       - feature/slack-test
+
+# jobs:
+#   Explore-GitHub-Actions:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+#       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+#       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+#       - name: Check out repository code
+#         uses: actions/checkout@v2
+#       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+#       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+#       - name: List files in the repository
+#         run: |
+#           ls ${{ github.workspace }}
+#       - run: echo "🍏 This job's status is ${{ job.status }}."
+#   deploy-dev:
+#     if: ${{ github.ref == 'refs/heads/develop' }}
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout source code
+#         uses: actions/checkout@v2
+#     # ...
+
+#   deploy-prod:
+#     if: ${{ github.ref == 'refs/heads/main' }}
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout source code
+#         uses: actions/checkout@v2
+#     # ...
+
+#   # Slack notification job
+#   slack-notification:
+#     if: ${{ always() }}
+#     needs: [deploy-dev, deploy-prod]
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Set CUSTOM_STATUS Env Variable
+#         run: |
+#           if [ "${{ needs.deploy-dev.result }}" = "failure" ] || \
+#              [ "${{ needs.deploy-prod.result }}" = "failure" ];
+#           then
+#             CUSTOM_STATUS="❌ FAIL"
+#           elif [ "${{ needs.deploy-dev.result }}" = "cancelled" ] || \
+#             [ "${{ needs.deploy-prod.result }}" = "cancelled" ];
+#           then
+#             CUSTOM_STATUS="⚠️ CANCEL"
+#           else
+#             CUSTOM_STATUS="✅ SUCCESS"
+#           fi
+
+#           echo "CUSTOM_STATUS=${CUSTOM_STATUS}" >> $GITHUB_ENV
+
+#       - name: slack-send
+#         uses: slackapi/slack-github-action@v1.19.0
+#         with:
+#           payload: |
+#             {
+#               "custom_status": "${{ env.CUSTOM_STATUS }}",
+#               "workflow": "${{ github.workflow }}",
+#               "job_deploy_dev": "deploy_dev",
+#               "status_deploy_dev": "${{ needs.deploy-dev.result }}",
+#               "job_deploy_prod": "deploy_prod",
+#               "status_deploy_prod": "${{ needs.deploy-prod.result }}",
+#               "actor": "${{ github.actor }}",
+#               "ref_name": "${{ github.ref_name }}",
+#               "head_commit_url": "${{ github.event.head_commit.url }}",
+#               "action_run_url": "${{ env.ACTION_RUN_URL }}"
+#             }
+#         env:
+#           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#           ACTION_RUN_URL: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
