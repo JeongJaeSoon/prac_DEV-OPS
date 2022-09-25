@@ -10,15 +10,8 @@ comment: |
 # - values are array of string patterns to match against title + body in issues/prs
 labels:
   "🌏 live":
-    - '\blive\b'
-    - '\bLive\b'
-    - '\bLIVE\b'
+    - '/\blive\b/i'
   "🛠 refactoring":
-    - '\brefactoring\b'
-    - '\bRefactoring\b'
-    - '\bREFACTORING\b'
+    - '/\brefactoring\b/i'
   "🧪 test-code":
-    - '\btest code\b'
-    - '\bTest code\b'
-    - '\bTest Code\b'
-    - '\bTEST CODE\b'
+    - '/\btest code\b/i'
