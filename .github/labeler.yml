@@ -6,3 +6,16 @@ labels:
     - '\blive release\b'
   "🛠 refactoring":
     - '\bRefactoring\b'
+
+
+":pencil2: docs":
+- "**/*.md"
+
+":test_tube: test-code":
+- "spec/**/*.spec.php"
+- "spec/**/*.spec.js"
+
+":package: app:package":
+- package.json
+- package-lock.json
+- composer.json

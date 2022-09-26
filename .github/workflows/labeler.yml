@@ -1,9 +1,11 @@
-name: Auto Labeler
+name: Pull Request Labeler
 on:
   pull_request:
-    types: [opened, reopened]
-    branches:
-      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+
 
 jobs:
   labeler:
@@ -11,6 +13,7 @@ jobs:
     steps:
       - name: Check Labels
         id: labeler
-        uses: jimschubert/labeler-action@v2
+        uses: actions/labeler@v4
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+
