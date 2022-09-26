@@ -9,13 +9,13 @@
 
 
 ":pencil2: docs":
-- "**/*.md"
+  - "**/*.md"
 
 ":test_tube: test-code":
-- "spec/**/*.spec.php"
-- "spec/**/*.spec.js"
+  - "spec/**/*.spec.php"
+  - "spec/**/*.spec.js"
 
 ":package: app:package":
-- package.json
-- package-lock.json
-- composer.json
+  - package.json
+  - package-lock.json
+  - composer.json
