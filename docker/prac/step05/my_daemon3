@@ -1,0 +1,32 @@
+# 카운터 초기화
+COUNT=0
+
+# 퍼시스턴트 볼륨
+PV=/pv/save.dat
+
+# 환경변수가 없으면 설정
+if [ -z "$INTERVAL" ]; then
+    INTERVAL=3
+fi
+
+# 기동 시 상태 취득
+if [ -f $PV ]; then
+   COUNT=`cat $PV`
+   rm -f $PV
+fi
+
+# SIGTERM 시그널 처리
+save() {
+  echo $COUNT > $PV
+  exit
+}
+trap save TERM
+
+# 메인 루프
+while [ ture ];
+do
+    TM=`date|awk '{print $4}'`
+    printf "%s : %s \n" $TM $COUNT
+    let COUNT=COUNT+1
+    sleep $INTERVAL
+done
