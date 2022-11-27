@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v3
@@ -16,7 +16,7 @@ jobs:
         run: tar -cpvzf ./$GITHUB_SHA.tgz *
         shell: bash
 
-      - name: Configure ASW credentials
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -30,7 +30,9 @@ jobs:
             ./$GITHUB_SHA.tgz s3://github-actions-s3-codedeploy/deploy/$GITHUB_SHA.tgz
 
       - name: Code Deploy
-        run: aws deploy create-deployment --application-name github-actions-application \
-              --deployment-config-name CodeDeployDefault.OneAtATime \
-              --deployment-group-name github-actions-group \
-              --s3-location bucket=github-actions-s3-codedeploy,bundleType=tgz,key=deploy/$GITHUB_SHA.tgz
+        run: |
+          aws deploy create-deployment \
+            --application-name github-actions-application \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --deployment-group-name github-actions-group \
+            --s3-location bucket=github-actions-s3-codedeploy,bundleType=tgz,key=deploy/$GITHUB_SHA.tgz
