@@ -30,8 +30,7 @@ jobs:
             ./$GITHUB_SHA.tgz s3://github-actions-s3-codedeploy/deploy/$GITHUB_SHA.tgz
 
       - name: Code Deploy
-        run: aws deploy create-deployment \
-              --application-name github-actions-application \
+        run: aws deploy create-deployment --application-name github-actions-application \
               --deployment-config-name CodeDeployDefault.OneAtATime \
               --deployment-group-name github-actions-group \
               --s3-location bucket=github-actions-s3-codedeploy,bundleType=tgz,key=deploy/$GITHUB_SHA.tgz
