@@ -6,7 +6,6 @@ on:
       - reopened
       - synchronize
 
-
 jobs:
   labeler:
     runs-on: ubuntu-latest
@@ -16,4 +15,3 @@ jobs:
         uses: actions/labeler@v4
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
-

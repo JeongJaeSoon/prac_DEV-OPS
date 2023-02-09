@@ -1,0 +1,38 @@
+name: Auto Code Deploy
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Make Tar File
+        run: tar -cpvzf ./$GITHUB_SHA.tgz *
+        shell: bash
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Upload to S3
+        run: |
+          aws s3 cp \
+            --region ap-northeast-1 \
+            ./$GITHUB_SHA.tgz s3://github-actions-s3-codedeploy/deploy/$GITHUB_SHA.tgz
+
+      - name: Code Deploy
+        run: |
+          aws deploy create-deployment \
+            --application-name github-actions-application \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --deployment-group-name github-actions-group \
+            --s3-location bucket=github-actions-s3-codedeploy,bundleType=tgz,key=deploy/$GITHUB_SHA.tgz

@@ -1,0 +1,10 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ec2-user/develop
+    overwrite: yes
+hooks:
+  AfterInstall:
+    - location: /start.sh
+      runas: root
